@@ -212,7 +212,7 @@ const VOCABULARY = [
 ].map(([word, definition], index) => ({ id: `w${index}`, word, definition }));
 
 const SUPABASE_CONFIG = window.ENGLISH_SPRINT_SUPABASE || {};
-const SUPABASE_URL = SUPABASE_CONFIG.url || "";
+const SUPABASE_URL = normalizeSupabaseUrl(SUPABASE_CONFIG.url || "");
 const SUPABASE_ANON_KEY = SUPABASE_CONFIG.anonKey || SUPABASE_CONFIG.publishableKey || "";
 
 let database = null;
@@ -269,6 +269,14 @@ function makeEmptyProgress() {
 
 function normalizeName(name) {
   return name.trim().toLowerCase();
+}
+
+function normalizeSupabaseUrl(url) {
+  try {
+    return new URL(url.trim()).origin;
+  } catch {
+    return url;
+  }
 }
 
 function normalizeProgress(progress) {
