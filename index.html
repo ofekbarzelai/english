@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>English Sprint</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section id="auth-view" class="auth-view" aria-labelledby="auth-title">
+        <div class="brand-block">
+          <p class="eyebrow">English Sprint</p>
+          <h1 id="auth-title">מתרגלים אוצר מילים בלי להסתבך</h1>
+          <p>כל משתמש מקבל חשבון והתקדמות שנשמרים בענן.</p>
+        </div>
+
+        <form id="auth-form" class="auth-panel">
+          <div class="segmented" role="tablist" aria-label="מצב כניסה">
+            <button type="button" class="segment active" data-auth-mode="login">התחברות</button>
+            <button type="button" class="segment" data-auth-mode="signup">חשבון חדש</button>
+          </div>
+
+          <label>
+            שם משתמש
+            <input id="username" name="username" autocomplete="username" required minlength="2" />
+          </label>
+
+          <label>
+            סיסמה
+            <input id="password" name="password" type="password" autocomplete="current-password" required minlength="3" />
+          </label>
+
+          <button class="primary-action" type="submit" id="auth-submit">כניסה</button>
+          <p id="auth-message" class="message" role="status"></p>
+        </form>
+      </section>
+
+      <section id="dashboard-view" class="dashboard-view hidden" aria-live="polite">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">English Sprint</p>
+            <h1>שלום, <span id="current-user"></span></h1>
+          </div>
+          <button id="logout-button" class="ghost-button" type="button">התנתקות</button>
+        </header>
+
+        <section class="stats-strip" aria-label="התקדמות">
+          <div>
+            <span id="total-count">0</span>
+            <small>מילים במאגר</small>
+          </div>
+          <div>
+            <span id="mastered-count">0</span>
+            <small>נפתרו במסלול החכם</small>
+          </div>
+          <div>
+            <span id="remaining-count">0</span>
+            <small>נשארו לחיזוק</small>
+          </div>
+        </section>
+
+        <section id="home-panel" class="home-panel">
+          <button class="mode-tile teal" type="button" data-start-mode="random">
+            <span>מיקס מילים</span>
+            <strong>שאלות אמריקאיות אקראיות מכל הרשימה, בלי קשר למה שכבר עשית.</strong>
+          </button>
+
+          <button class="mode-tile coral" type="button" data-start-mode="smart">
+            <span>מסלול חכם</span>
+            <strong>מתחיל מכל המילים, ובפעמים הבאות מחזיר רק את מה שלא הצלחת.</strong>
+          </button>
+
+          <button class="mode-tile yellow" type="button" id="word-list-button">
+            <span>רשימת מילים</span>
+            <strong>כל המילים והפירושים באנגלית במקום אחד לחזרה מהירה.</strong>
+          </button>
+
+          <button class="mode-tile slate danger" type="button" id="reset-button">
+            <span>איפוס הנתונים</span>
+            <strong>מאפס התקדמות וסטטיסטיקות בחשבון, בלי למחוק את המשתמש.</strong>
+          </button>
+        </section>
+
+        <section id="quiz-panel" class="quiz-panel hidden">
+          <div class="quiz-head">
+            <div>
+              <p id="quiz-mode-label" class="eyebrow"></p>
+              <h2 id="quiz-question"></h2>
+            </div>
+            <button class="ghost-button" type="button" id="back-home-button">חזרה</button>
+          </div>
+
+          <div class="progress-shell" aria-label="התקדמות בתרגול">
+            <div id="progress-bar"></div>
+          </div>
+
+          <div id="answer-options" class="answer-options"></div>
+          <p id="feedback" class="feedback" role="status"></p>
+
+          <div class="quiz-actions">
+            <button id="next-button" class="primary-action" type="button" disabled>שאלה הבאה</button>
+          </div>
+        </section>
+
+        <section id="words-panel" class="words-panel hidden">
+          <div class="quiz-head">
+            <div>
+              <p class="eyebrow">מאגר</p>
+              <h2>כל המילים</h2>
+            </div>
+            <button class="ghost-button" type="button" id="back-from-words">חזרה</button>
+          </div>
+          <div id="words-list" class="words-list"></div>
+        </section>
+      </section>
+    </main>
+
+    <script src="supabase-config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
