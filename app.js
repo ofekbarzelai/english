@@ -336,7 +336,7 @@ function usernameToEmail(username) {
     .replace(/\//g, "_")
     .replace(/=+$/g, "");
 
-  return `user-${encoded}@english-sprint.app`;
+  return `user-${encoded}@example.com`;
 }
 
 function friendlyError(error) {
