@@ -273,7 +273,14 @@ function normalizeName(name) {
 
 function normalizeSupabaseUrl(url) {
   try {
-    return new URL(url.trim()).origin;
+    const parsedUrl = new URL(url.trim());
+    const dashboardProjectMatch = parsedUrl.pathname.match(/\/project\/([a-z0-9]{20})/i);
+
+    if (parsedUrl.hostname === "supabase.com" && dashboardProjectMatch) {
+      return `https://${dashboardProjectMatch[1]}.supabase.co`;
+    }
+
+    return parsedUrl.origin;
   } catch {
     return url;
   }
@@ -336,6 +343,14 @@ function friendlyError(error) {
   const message = error?.message || String(error);
   if (message.includes("Invalid login credentials")) {
     return "שם משתמש או סיסמה לא נכונים.";
+  }
+
+  if (message.includes("Invalid path specified in request URL")) {
+    return "כתובת Supabase לא נכונה. צריך Project URL שמסתיים ב-supabase.co, לא כתובת של ה-Dashboard.";
+  }
+
+  if (message.includes("Email signups are disabled") || message.includes("email_provider_disabled")) {
+    return "ב-Supabase ההרשמה באימייל כבויה. צריך להפעיל Email provider בהגדרות Authentication.";
   }
 
   if (message.includes("already registered") || message.includes("User already registered")) {
